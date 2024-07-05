@@ -1,77 +1,69 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include "utils.h"
 using namespace std;
 
 class TwoSum {
-    
-public:
-    // Constructor (phương thức khởi tạo)
-    TwoSum(){}
+    private:
+ 
+    public:
+        // Constructor (phương thức khởi tạo)
+        TwoSum(){};
 
-    // TwoSum(std::string n, int a) : name(n), age(a) {};
-
-    // Destructor (phương thức hủy)
-    ~TwoSum() {}
-
-    struct TESTCASE_STRUCTURE
-    {
-        vector<int> data;
-        vector<int> result;
-        int target;
-        TESTCASE_STRUCTURE(vector<int> _data, int _target, vector<int> _result) : data(_data), result(_result), target(_target) {}
-        TESTCASE_STRUCTURE(vector<int> _data, int _target) : data(_data), target(_target) {}
-    };
-    
-    vector<TESTCASE_STRUCTURE> testCases;
-
-    void init(){
-        if(1){
-            TESTCASE_STRUCTURE testCase ({2,7,11,15}, 9, {0,1});
-            testCases.push_back(testCase);
-        }
-        if(1){
-            TESTCASE_STRUCTURE testCase ({3,2,4}, 6, {1,2});
-            testCases.push_back(testCase);
-        }
-        if(1){
-            TESTCASE_STRUCTURE testCase ({3,3}, 6, {0,1});
-            testCases.push_back(testCase);
-        }
-    }
-
-    void add_test_case(vector<int> _data, int _target, vector<int> _result){
-        TESTCASE_STRUCTURE testCase (_data, _target, _result);
-        testCases.push_back(testCase);
-    }
-    void add_test_case(vector<int> _data, int _target){
-        TESTCASE_STRUCTURE testCase (_data, _target);
-        testCases.push_back(testCase);
-    }
-    
-    vector<int> twoSum(vector<int>& nums, int target) {
-        cout << "nums: [";
-        for(int i = 0; i < nums.size(); i++){
-            if(i == nums.size() -1){
-                cout << nums.at(i);
-            }else{
-                cout << nums.at(i) << ", ";
+        // Destructor (phương thức hủy)
+        ~TwoSum() {};
+        
+        static vector<int> twoSum(vector<int>& nums, int target) {
+            std::unordered_map<int, int> myMap;
+            vector<int> output;
+            for(int i = 0; i < nums.size(); i++){
+                if (myMap.find(target - nums.at(i)) != myMap.end()){
+                    output.push_back(i);
+                    output.push_back(myMap[target - nums.at(i)]);
+                    return output;
+                }
+                myMap.insert({nums[i], i});
             }
-            
+            return output;
         }
-        cout << "]" << endl;
-        cout << "target: " << target << endl;
+        static void testFunction() {
+            int countPassed = 0;
+            vector<vector<int>> datas = {{2,7,11,15}, {3,2,4}, {3,3}};
+            vector<int> targets = {9, 6, 6};
+            vector<vector<int>> expecteds = {{0,1}, {1,2}, {0,1}};
 
-        std::unordered_map<int, int> myMap;
-        vector<int> output;
-        for(int i = 0; i < nums.size(); i++){
-            if (myMap.find(target - nums.at(i)) != myMap.end()){
-                output.push_back(i);
-                output.push_back(myMap[target - nums.at(i)]);
-                return output;
+            // {2,7,11,15}, 9, {0,1}
+            // {3,2,4}, 6, {1,2}
+            // {3,3}, 6, {0,1}
+            for(int i = 0; i < datas.size(); i++){
+                cout << "=================== Begin - Test case #" << i << " ====================" << endl;
+                vector<int> nums = datas.at(i);
+                int target = targets.at(i);
+                vector<int> expected = expecteds.at(i);
+                cout << "nums: " << convertToString(nums) << endl;
+                cout << "target: " << target << endl;
+                cout << "expected: " << convertToString(expected) << endl;
+                
+                vector<int> result = twoSum(nums, target);
+                cout << "result: " << convertToString(result) << endl;
+
+                if (result.size() == expected.size()) {
+                    cout << "Indices: " << result[0] << ", " << result[1] << endl;
+                    if((result.at(0) == expected.at(0)) && result.at(1) == expected.at(1)){
+                        countPassed ++;
+                        printStatus(true);
+                    }else if((result.at(0) == expected.at(1)) && result.at(1) == expected.at(0)){
+                        countPassed ++;
+                        printStatus(true);
+                    }else{
+                        printStatus(false);
+                    }
+                } else {
+                    printStatus(false);
+                }
+                cout << "=================== End - Test case #" << i << " ====================" << endl;
             }
-            myMap.insert({nums[i], i});
+            cout << "Passed: " << countPassed <<"/" << expecteds.size() << endl;
         }
-        return output;
-    }
 };
