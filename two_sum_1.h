@@ -6,6 +6,14 @@ using namespace std;
 class TwoSum {
     
 public:
+    // Constructor (phương thức khởi tạo)
+    TwoSum(){}
+
+    // TwoSum(std::string n, int a) : name(n), age(a) {};
+
+    // Destructor (phương thức hủy)
+    ~TwoSum() {}
+
     struct TESTCASE_STRUCTURE
     {
         vector<int> data;
