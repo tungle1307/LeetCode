@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <string>
+
 using namespace std;
 
 class AddTwoNumber {
@@ -124,6 +126,19 @@ class AddTwoNumber {
             return vt;
         }
         
+        static string convertToString(vector<int> v) {
+            string data_str = "[ " ;
+            for(int i = 0; i < v.size(); i++){
+                if(i+1 == v.size()){
+                    data_str += to_string(v.at(i));
+                }else{
+                    data_str += to_string(v.at(i));
+                    data_str += ", " ;
+                }
+            }
+            data_str += " ]";
+            return data_str;
+        }
 
         static void testFunction() {
             int countPassed = 0;
@@ -160,13 +175,13 @@ class AddTwoNumber {
                     }
                     if(isPassed){
                         countPassed ++;
-                        printStatus(true);
+                        cout << "============> PASSED" << endl;
                     }else{
-                        printStatus(false);
+                        cout << "============> FAILED" << endl;
                     }
                     
                 } else {
-                    printStatus(false);
+                    cout << "============> FAILED" << endl;
                 }
                 cout << "=================== End - Test case #" << i << " ====================" << endl;
             }
