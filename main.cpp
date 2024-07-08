@@ -6,6 +6,7 @@
 #include "longest_palindromic_substring_5.h"
 #include "zigzag_conversion_6.h"
 #include "reverse_integer_7.h"
+#include "string_to_integer_8.h"
 
 using namespace std;
 
@@ -17,5 +18,6 @@ int main() {
     LongestPalindromicSubstring::testFunction();
     ZigzagConversion::testFunction();
     ReverseInteger::testFunction();
+    StringToInteger::testFunction();
     return 0;
 }
